@@ -8,11 +8,14 @@ import {
   FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field"
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import { Input } from '@/components/ui/input';
 import { FcGoogle } from 'react-icons/fc';
 import Link from "next/link"
-import { IInputErrorState } from '@/utils/getInputFieldError';
+import { userLogin } from "@/services/auth/userLogin"
+import InputFieldError from "../InputFieldError"
+import { IInputErrorState } from "@/utils/getInputFieldError"
+import { toast } from "sonner"
 
 export function LoginForm({
   className,
@@ -22,11 +25,13 @@ export function LoginForm({
 
   const [state, formAction, isPending] = useActionState(userLogin, null)
 
-//   useEffect(() => {
-//     if (state && !state.success && state.message) {
-//       toast.error(state.message)
-//     }
-//   }, [state])
+  useEffect(() => {
+    if (state && !state.success && state.message) {
+      toast.error(state.message)
+    }else{
+      toast.success('Successfully Loged in')
+    }
+  }, [state])
 
 
   return (

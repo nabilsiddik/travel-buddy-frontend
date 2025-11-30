@@ -8,6 +8,7 @@ import { loginValidationZodSchema } from '@/zod/auth.zodSchema'
 import { parse } from "cookie";
 import { setCookie } from '@/utils/tokenHandler'
 import { UserRole } from '@/types/user.interface'
+import { serverFetch } from '@/lib/serverFetch'
 
 export const userLogin = async (_currentState: any, formData: any): Promise<any> => {
     try {
@@ -27,13 +28,12 @@ export const userLogin = async (_currentState: any, formData: any): Promise<any>
 
         const validatedPayload = zodValidator(payload, loginValidationZodSchema).data;
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`, {
-            method: 'POST',
+        const res = await serverFetch.post("/auth/login", {
+            body: JSON.stringify(validatedPayload),
             headers: {
                 "Content-Type": "application/json",
-            },
-            body: JSON.stringify(validatedPayload)
-        })
+            }
+        });
 
         const result = await res.json()
 
@@ -64,22 +64,22 @@ export const userLogin = async (_currentState: any, formData: any): Promise<any>
 
 
         // Set acceess token to browser cookie
-        await setCookie('accessToken', accessTokenObj.accessToken, {
-            httpOnly: true,
-            maxAge: parseInt(accessTokenObj['Max-Age'] || 1000 * 60 * 60),
-            path: accessTokenObj.Path || '/',
+        await setCookie("accessToken", accessTokenObj.accessToken, {
             secure: true,
-            sameSite: accessTokenObj.SameSite
-        })
+            httpOnly: true,
+            maxAge: parseInt(accessTokenObj['Max-Age']) || 1000 * 60 * 60,
+            path: accessTokenObj.Path || "/",
+            sameSite: accessTokenObj['SameSite'] || "none",
+        });
 
         // Set refresh token to browser cookie
-        await setCookie('refreshToken', refreshTokenObj.refreshToken, {
-            httpOnly: true,
-            maxAge: parseInt(refreshTokenObj['Max-Age']),
-            path: refreshTokenObj.Path || '/',
+        await setCookie("refreshToken", refreshTokenObj.refreshToken, {
             secure: true,
-            sameSite: refreshTokenObj.SameSite
-        })
+            httpOnly: true,
+            maxAge: parseInt(refreshTokenObj['Max-Age']) || 1000 * 60 * 60 * 24 * 90,
+            path: refreshTokenObj.Path || "/",
+            sameSite: refreshTokenObj['SameSite'] || "none",
+        });
 
 
         // Verify token 
