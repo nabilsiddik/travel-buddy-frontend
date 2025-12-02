@@ -4,9 +4,11 @@ import { getAllUsers } from "@/utils/getAllUsers"
 
 const Users = async() => {
   const user = await getAllUsers()
+
+  console.log(user.data, 'use jdkfj')
   return (
     <div>
-      <UsersTable data = {user?.data}/>
+      <UsersTable users = {user?.data}/>
     </div>
   )
 }

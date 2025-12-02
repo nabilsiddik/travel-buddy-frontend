@@ -13,7 +13,7 @@ interface UserInfoCellProps {
 
 export function UserInfoCell({ name, email, photo, gender }: UserInfoCellProps) {
 
-    let userPlaceholderImage = gender === Gender.MALE ? '/images/man.png' : '/images/woman.png' 
+    let userPlaceholderImage = gender.toUpperCase() === 'MALE' ? '/images/man.png' : '/images/woman.png' 
 
   return (
     <div className="flex items-center gap-3">

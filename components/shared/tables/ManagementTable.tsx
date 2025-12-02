@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   ArrowDown,
   ArrowUp,
@@ -11,7 +11,6 @@ import {
   Loader2,
   Loader2Icon,
   MoreHorizontal,
-  Table,
   Trash,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -51,7 +50,6 @@ function ManagementTable<T>({
   const hasActions = onView || onEdit || onDelete;
 
 
-  console.log(columns, 'my columns')
 
   return (
     <>
