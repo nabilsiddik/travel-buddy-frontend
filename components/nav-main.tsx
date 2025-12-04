@@ -78,12 +78,12 @@ export function NavMain({ adminNavItems, userNavItems, userInfo }: NavMainProps)
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem id="sidebarMenuSubItem" key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <Link className={`${subItem.url === pathName && 'bg-primary'} rounded-md py-5 px-3 font-medium`} href={subItem.url}>
+                        <Link className={`${subItem.url === pathName && 'bg-gray-300'} rounded-md py-5 px-3 font-medium`} href={subItem.url}>
                           {subItem?.icon}
                           {subItem.title}
                         </Link>
                       </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
+                    </SidebarMenuSubItem> 
                   ))}
                 </SidebarMenuSub>
               </CollapsibleContent>

@@ -44,13 +44,13 @@ const data = {
   ],
   userNavItems: [
     {
-      title: "Travel Management",
+      title: "Travel Plans",
       icon: <PlaneTakeoff />,
       isActive: false,
       items: [
         {
-          title: "Create Travel Plans",
-          url: "/user/dashboard/create-travel-plans",
+          title: "Create Plans",
+          url: "/user/dashboard/travel-plans",
           icon: <BaggageClaim />
         }
       ],

@@ -30,7 +30,7 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
   const changeLimit = (newLimit: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("limit", newLimit);
-    params.set("page", "1"); // Reset to first page when changing limit
+    params.set("page", "1")
 
     startTransition(() => {
       router.push(`?${params.toString()}`);
