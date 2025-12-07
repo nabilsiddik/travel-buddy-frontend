@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import DisplayTravelers from "@/components/shared/DisplayTravelers";
 import PageHeader from "@/components/shared/PageHeader"
 import { getAllUsers } from "@/services/admin/userManagement"
