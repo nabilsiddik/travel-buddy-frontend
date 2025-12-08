@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/autoplay";
+
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

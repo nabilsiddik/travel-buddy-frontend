@@ -11,7 +11,6 @@ export default async function TravelPlanDetailsPage({ params }: Props) {
   const res = await serverFetch.get(`/travel-plan/${id}`, { cache: "no-store" });
   const response = await res.json();
 
-  console.log(response, 'my res')
 
   if (!response?.data) {
     return (

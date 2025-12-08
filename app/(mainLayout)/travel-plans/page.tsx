@@ -11,9 +11,7 @@ const TravelPlans = async ({ searchParams }: {
   const queryString = queryStringFormatter(searchParamsObj)
   const travelPlanData = await getAllTravelPlans(queryString)
   const travelPlans = travelPlanData?.data || []
-
-  console.log(travelPlans, 'tra data')
-
+  
   return (
     <div>
       <PageHeader title="Travel Plans" description="Explore all travel plans" backgroundImage="/images/bg-banner/travel-plans.jpg" />
