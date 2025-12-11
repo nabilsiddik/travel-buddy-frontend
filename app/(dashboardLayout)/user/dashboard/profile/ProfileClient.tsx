@@ -201,7 +201,7 @@ export default function ProfileClient({ user }: { user: any }) {
             )}
 
 
-            {!path.startsWith('/traveler-profile') && 
+            {path.startsWith('/traveler-profile') && 
                 <LeaveReview/>
             }
         </div>

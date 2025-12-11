@@ -4,6 +4,7 @@ import { useState } from "react";
 import { serverFetch } from "@/lib/serverFetch";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
+import { toast } from "sonner";
 
 export default function LeaveReview() {
   const [rating, setRating] = useState(0);
@@ -24,7 +25,9 @@ export default function LeaveReview() {
     // } finally {
     //   setLoading(false);
     // }
-    console.log('review')
+    // console.log('review')
+
+    console.log({rating, comment}, 'hi')
   };
 
   return (

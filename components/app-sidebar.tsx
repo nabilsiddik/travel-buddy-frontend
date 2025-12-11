@@ -7,7 +7,7 @@ import {
   SidebarFooter,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { BaggageClaim, GitPullRequestIcon, List, ListCheck, PersonStanding, PlaneTakeoff, Settings, User, User2 } from "lucide-react";
+import { BaggageClaim, GitPullRequestIcon, List, ListCheck, PersonStanding, PlaneTakeoff, Settings, User, User2, Users } from "lucide-react";
 import { IUserInfo } from "@/types/user.interface";
 
 const data = {
@@ -52,6 +52,24 @@ const data = {
           title: "My Plans",
           url: "/user/dashboard/my-travel-plans",
           icon: <List />
+        }
+        ,
+        {
+          title: "Reviewable Plans",
+          url: "/user/dashboard/reviewable-plans",
+          icon: <List />
+        }
+      ],
+    },
+    {
+      title: "Participants",
+      icon: <Users />,
+      isActive: false,
+      items: [
+        {
+          title: "All Participants",
+          url: "/user/dashboard/participants",
+          icon: <BaggageClaim />
         }
       ],
     },

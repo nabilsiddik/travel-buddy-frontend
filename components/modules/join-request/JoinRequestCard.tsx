@@ -20,6 +20,7 @@ export default function JoinRequestCard({ request }: JoinRequestCardProps) {
 
     const pathName = usePathname()
 
+    // handle action
     const handleAction = async (endpoint: string, newStatus?: string) => {
         try {
             setLoading(true);
@@ -49,6 +50,34 @@ export default function JoinRequestCard({ request }: JoinRequestCardProps) {
 
         } catch (err: any) {
             toast.error('Something went wrong.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+    // Complete participant action
+    const handleComplete = async () => {
+        try {
+            setLoading(true);
+
+            const res = await serverFetch.post("/participant/complete", {
+                body: JSON.stringify({ participantId: request?.participantId }),
+                headers: { "Content-Type": "application/json" },
+            });
+
+            const result = await res.json();
+
+            console.log(result, 'par res')
+            if (result.success) {
+                toast.success("Travel marked as completed!");
+                setStatus("COMPLETED");
+            } else {
+                toast.error(result.message || "Failed to complete travel.");
+            }
+        } catch (err: any) {
+            toast.error("Something went wrong.");
         } finally {
             setLoading(false);
         }
@@ -126,6 +155,16 @@ export default function JoinRequestCard({ request }: JoinRequestCardProps) {
                         </Button>
                     </div>
                 )}
+
+
+                {status === "ACCEPTED" && (
+                    <div className="flex flex-col gap-2 pt-2">
+                        <Button className="w-full" variant="outline" disabled={loading} onClick={handleComplete}>
+                            Mark as Completed
+                        </Button>
+                    </div>
+                )}
+
 
                 {!pathName.startsWith('/user/dashboard/join-requests-sent') &&
                     <Link href={`/traveler-profile/${request?.requester?.id}`}>
