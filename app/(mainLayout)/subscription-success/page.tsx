@@ -23,6 +23,7 @@ const SubscriptionSuccess = () => {
             return
         }
 
+        // Verify payment
         const verifyPayment = async () => {
             try {
                 const res = await fetch(
