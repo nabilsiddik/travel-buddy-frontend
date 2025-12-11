@@ -176,12 +176,7 @@ export function SignupForm({
         <Field>
           <Button type="submit" disabled={isPending}>{isPending ? 'Creating...' : 'Create Account'}</Button>
         </Field>
-        <FieldSeparator>Or continue with</FieldSeparator>
         <Field>
-          <Button variant="outline" type="button">
-            <FcGoogle />
-            Sign up with Google
-          </Button>
           <FieldDescription className="px-6 text-center">
             Already have an account? <Link href={'/login'}>Sign in</Link>
           </FieldDescription>

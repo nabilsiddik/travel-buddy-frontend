@@ -58,12 +58,7 @@ export function LoginForm({
             {isPending ? "Proccessing" : 'Login'}
           </Button>
         </Field>
-        <FieldSeparator>Or continue with</FieldSeparator>
         <Field>
-          <Button variant="outline" type="button">
-            <FcGoogle />
-            Sign up with Google
-          </Button>
           <FieldDescription className="px-6 text-center">
             Don't have an account? <Link href={'/signup'}>Sign up</Link>
           </FieldDescription>
