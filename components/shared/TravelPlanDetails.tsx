@@ -6,9 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, User, Wallet, Eye, EyeOff, VerifiedIcon, Verified } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
+import { useState } from "react";
+import { serverFetch } from "@/lib/serverFetch";
+import { toast } from "sonner";
 
 export default function TravelPlanDetails({ plan }: { plan: any }) {
     const {
+        id: planId,
         destination,
         startDate,
         endDate,
@@ -19,6 +24,37 @@ export default function TravelPlanDetails({ plan }: { plan: any }) {
         user,
     } = plan;
 
+    const [isJoining, setIsJoining] = useState(false);
+
+    const handleJoin = async () => {
+        setIsJoining(true);
+        try {
+            const res = await serverFetch.post(`/join-request/send`, {
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ planId }),
+            });
+
+            const data = await res.json();
+
+            console.log(data, 'data')
+            if (data?.success && data?.data?.id) {
+                toast.success('Join request sent. Wait for confirm.')
+            } else if (!data?.success && data?.message === 'Request already exists') {
+                toast.error(`${data?.message}. Please wait for accept.`)
+            }
+            else if (!data?.success && data?.message === 'Cannot join your own plan') {
+                toast.error(`${data?.message}`)
+            }
+            else {
+                toast.error('Something went wrong!')
+            }
+
+        } catch (err: any) {
+            toast.error('Something went wrong!')
+        } finally {
+            setIsJoining(false);
+        }
+    };
     return (
         <div className="pb-20">
             <div className="relative flex items-center justify-center h-[320px] w-full bg-black">
@@ -57,14 +93,34 @@ export default function TravelPlanDetails({ plan }: { plan: any }) {
                                         />
                                     </div>
 
-                                    <h3 className="font-semibold text-lg flex items-center gap-2">{user?.name} {user?.verifiedBadge ? <Verified/> : ''}</h3>
+                                    <h3 className="font-semibold text-lg flex items-center gap-2">{user?.name} {user?.verifiedBadge ? <Verified /> : ''}</h3>
                                     <p className="text-sm text-gray-500">{user?.email}</p>
 
                                     <Link href={'/'}>
                                         <Button variant={'outline'}>Visit Profile</Button>
                                     </Link>
+
+                                    {/* join request confirm modal */}
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button className="w-full mt-3">Join With {user?.name}</Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Confirm Join</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    Are you sure you want to join <b>{user?.name}</b> for this trip to <b>{destination}</b>?
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction onClick={handleJoin} disabled={isJoining}>
+                                                    {isJoining ? "Joining..." : "Yes, Join"}
+                                                </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
                                 </Card>
-                                <Button className="cursor-pointer mt-3 w-full">Join With {user?.name}</Button>
 
                             </div>
 

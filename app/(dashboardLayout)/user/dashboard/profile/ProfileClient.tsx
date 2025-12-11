@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { updateUserProfile } from "@/services/user/userProfileManagement";
 import ProfileUploader from "@/components/ProfileUploader";
 import { usePathname } from "next/navigation";
+import LeaveReview from "@/components/shared/review/LeaveReview";
 
 export default function ProfileClient({ user }: { user: any }) {
     const [edit, setEdit] = useState(false);
@@ -198,6 +199,11 @@ export default function ProfileClient({ user }: { user: any }) {
                     </form>
                 </div>
             )}
+
+
+            {!path.startsWith('/traveler-profile') && 
+                <LeaveReview/>
+            }
         </div>
     );
 }
