@@ -62,8 +62,15 @@ export default function JoinRequestCard({ request }: JoinRequestCardProps) {
         try {
             setLoading(true);
 
+            const participantId = request?.participants?.[0]?.id;
+
+            if (!participantId) {
+                toast.error("No participant found for this request.");
+                return;
+            }
+
             const res = await serverFetch.post("/participant/complete", {
-                body: JSON.stringify({ participantId: request?.participantId }),
+                body: JSON.stringify({ participantId }),
                 headers: { "Content-Type": "application/json" },
             });
 
