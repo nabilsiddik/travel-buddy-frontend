@@ -1,15 +1,9 @@
-'use client'
-export const dynamic = "force-dynamic";
-import { redirect, usePathname } from "next/navigation";
-const UserDashboard = () => {
-  const path = usePathname()
 
-  if(path === '/user/dashboard'){
-    redirect('/user/dashboard/create-plan')
-  }
+const UserDashboard = () => {
+
   return (
     <div>
-      
+      <h1>User Dashboard</h1>
     </div>
   )
 }

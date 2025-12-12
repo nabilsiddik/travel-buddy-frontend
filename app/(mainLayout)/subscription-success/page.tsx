@@ -1,5 +1,7 @@
 "use client"
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
