@@ -4,6 +4,7 @@ export const revalidate = 0;
 
 
 import { Button } from '@/components/ui/button'
+import { serverFetch } from '@/lib/serverFetch';
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -55,7 +56,7 @@ const SubscriptionSuccess = () => {
 
         const interval = setInterval(async () => {
             try {
-                const res = await fetch(
+                const res = await serverFetch.get(
                     `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/me`,
                     { credentials: "include" }
                 );
