@@ -13,6 +13,7 @@ export default function Home() {
       <Hero/>
       <TopDestinations/>
       <FindBuddyCTA/>
+      <TopRatedTravelers/>
       <HowItWorks/>
       <PricingSection/>
       <Testimonials/>

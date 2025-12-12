@@ -16,7 +16,7 @@ export default function FindBuddyCTA() {
             No more solo adventures unless you want to! Match with travelers who share your destination, dates, and interests.
           </p>
 
-          <Link href={'/find-travel-buddy'}>
+          <Link href={'/travel-plans'}>
             <Button size="lg" className="px-8 py-6 text-lg rounded-xl cursor-pointer">
               Start Finding Buddies →
             </Button>

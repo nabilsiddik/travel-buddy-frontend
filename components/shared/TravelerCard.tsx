@@ -10,7 +10,7 @@ const TravelerCard = ({ traveler }: {
   traveler: IUser
 }) => {
   return (
-    <div className="p-4 sm:p-6 max-w-sm w-full bg-white shadow-lg rounded-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+    <div className="p-4 sm:p-6 w-full bg-white shadow-lg rounded-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105 border">
       <Card className="pt-0">
         <div
           style={{

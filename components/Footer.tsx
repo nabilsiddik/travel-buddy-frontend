@@ -111,7 +111,7 @@ const Footer = ({
             ))}
           </div>
           <div className="text-muted-foreground flex flex-col justify-center gap-4 border-t py-8 mt-20 text-sm font-medium md:flex-row md:items-center">
-            <p>{copyright}</p>
+            <p className="text-center">{copyright}</p>
           </div>
         </footer>
       </div>

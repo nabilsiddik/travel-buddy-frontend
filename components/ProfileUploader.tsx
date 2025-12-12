@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
 export default function ProfileUploader({setProfileImage}: any) {
-  const maxSizeMB = 5;
+  const maxSizeMB = 1;
   const maxSize = maxSizeMB * 1024 * 1024;
 
   const [
