@@ -8,8 +8,8 @@ import getLogedInUser from './utils/getLogedInUser';
 
 export async function proxy(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
-    const logedInUser = await getLogedInUser()
     const accessToken = await getCookie('accessToken') || null
+    const logedInUser = accessToken ? await getLogedInUser() : null
 
     // If access token available verify it and store user role otherwise delete accesstoken and refresh token if they are already available
     let userRole: UserRole | null = null;
@@ -26,7 +26,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // redirect admin to user management when visit /admin/dashboard
-    if(pathname === '/admin/dashboard'){
+    if (pathname === '/admin/dashboard') {
         return NextResponse.redirect(new URL('/admin/dashboard/users', request.url))
     }
 
@@ -38,8 +38,11 @@ export async function proxy(request: NextRequest) {
     const isAuth = isAuthRoute(pathname)
 
     // user is not premium
-    if(!logedInUser?.verifiedBadge && (pathname.startsWith('/user') || pathname.startsWith('/admin'))){
-        return NextResponse.redirect(new URL('/subscription', request.url))
+    if (!logedInUser?.verifiedBadge && (pathname.startsWith('/user'))) {
+        // Only redirect if trying to visit dashboard/routes, not login
+        if (!isAuthRoute(pathname)) {
+            return NextResponse.redirect(new URL('/subscription', request.url));
+        }
     }
 
     // If already loged in and trying to visit auth page redirect to his own dashboard
@@ -73,7 +76,7 @@ export async function proxy(request: NextRequest) {
         }
     }
 
-    
+
 
     return NextResponse.next()
 }

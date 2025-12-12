@@ -24,6 +24,10 @@ export default function ProfileClient({ user }: { user: any }) {
     const [profileImage, setProfileImage] = useState<File | null>(null)
     const [profileState, profileAction, isProfileUpdating] =
         useActionState(updateUserProfile, null);
+    const [reviewsData, setReviewsData] = useState<any>(null);
+    const [loadingReviews, setLoadingReviews] = useState(true);
+
+    console.log(reviewsData, 'my revie data')
 
     const path = usePathname()
 
@@ -35,6 +39,29 @@ export default function ProfileClient({ user }: { user: any }) {
             setEdit(false);
         }
     }, [profileState]);
+
+    useEffect(() => {
+        const fetchReviews = async () => {
+            if (!user?.id) return;
+
+            try {
+                const res = await fetch(`/user/${user.id}/reviews`);
+                const data = await res.json();
+
+                if (data?.success) {
+                    setReviewsData(data.data);
+                } else {
+                    console.error(data?.message || "Failed to fetch reviews");
+                }
+            } catch (err) {
+                console.error("Error fetching reviews:", err);
+            } finally {
+                setLoadingReviews(false);
+            }
+        };
+
+        fetchReviews();
+    }, [user?.id]);
 
     return (
         <div className="space-y-10">
@@ -199,6 +226,47 @@ export default function ProfileClient({ user }: { user: any }) {
                     </form>
                 </div>
             )}
+
+
+            {/* Reviews & Average Rating */}
+            <div className="mt-10 p-6 bg-white border rounded-xl shadow-sm">
+                <h3 className="text-2xl font-semibold mb-4">Reviews & Ratings</h3>
+
+                {loadingReviews ? (
+                    <p>Loading reviews...</p>
+                ) : (
+                    <>
+                        <p className="mb-4">
+                            Average Rating: <span className="font-bold">{reviewsData?.averageRating?.toFixed(1) || 0} ⭐</span> ({reviewsData?.reviewCount || 0} reviews)
+                        </p>
+
+                        {reviewsData?.recentReviews?.length ? (
+                            <ul className="space-y-4">
+                                {reviewsData.recentReviews.map((review: any) => (
+                                    <li key={review.id} className="border p-4 rounded-md shadow-sm">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <div className="w-10 h-10 rounded-full overflow-hidden relative">
+                                                <Image
+                                                    src={review.reviewer.profileImage || "/placeholder-user.jpg"}
+                                                    alt={review.reviewer.name}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                            <p className="font-semibold">{review.reviewer.name}</p>
+                                            <span className="ml-auto font-medium">{review.rating} ⭐</span>
+                                        </div>
+                                        {review.comment && <p className="text-gray-600">{review.comment}</p>}
+                                        <p className="text-xs text-gray-400 mt-1">{new Date(review.createdAt).toLocaleDateString()}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No reviews yet.</p>
+                        )}
+                    </>
+                )}
+            </div>
 
 
             {/* {path.startsWith('/traveler-profile') && 

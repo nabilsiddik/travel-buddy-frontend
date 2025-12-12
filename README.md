@@ -1,6 +1,6 @@
 # Travel Buddy Frontend
 
-**Live Demo:** [Add your live URL here]
+**Live Demo:** [[Add your live URL here](https://travel-buddy-frontend-six.vercel.app)]
 
 The **Travel Buddy Frontend** is a modern, responsive, and interactive web application built with Next.js and TailwindCSS. It allows users to explore travel plans, join trips, leave reviews, and manage their profile seamlessly.
 
@@ -53,7 +53,7 @@ npm install
 
 3. Install dependencies:
 ```bash
-NEXT_PUBLIC_API_BASE_URL=http://localhost:4000/api
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api/v1
 NEXT_PUBLIC_STRIPE_PUBLIC_KEY=your_stripe_public_key
 ```
 
