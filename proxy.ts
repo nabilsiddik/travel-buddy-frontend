@@ -37,14 +37,6 @@ export async function proxy(request: NextRequest) {
     // check if it's an auth route
     const isAuth = isAuthRoute(pathname)
 
-    // user is not premium
-    if (!logedInUser?.verifiedBadge && (pathname.startsWith('/user'))) {
-        // Only redirect if trying to visit dashboard/routes, not login
-        if (!isAuthRoute(pathname)) {
-            return NextResponse.redirect(new URL('/subscription', request.url));
-        }
-    }
-
     // If already loged in and trying to visit auth page redirect to his own dashboard
     if (accessToken && isAuth) {
         return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
